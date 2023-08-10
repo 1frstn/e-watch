@@ -1,0 +1,157 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+
+body {
+  min-width: 100vw;
+  min-height: 100vh;
+  padding: 2em;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+
+
+/* Shoppin Cart  begining*/
+.e-mainpage{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+.e-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #1a1a1a;
+}
+
+.e-nav{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.e-footer{  
+  
+  flex-grow: 1;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+}
+
+/* Home PAge */
+
+.e-homepage-a{
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+}
+
+.e-homepage{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  
+}
+
+.e-homepage-product{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.e-homepage-product img{
+  width: 15em;
+  border-radius: 10px;
+}
+.e-homepage-product button{
+  width: 180px;
+}
+/* Home Page Ending*/
+
+/* Cart Page*/
+
+.e-cart{
+  display: flex;
+  flex-direction: column;
+}
+.e-cart-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+}
+.e-cart img{
+  width: 140px;
+  border-radius: 8px;
+  margin: .8em;
+}
+
+
+
+/* shopping cart ending */
