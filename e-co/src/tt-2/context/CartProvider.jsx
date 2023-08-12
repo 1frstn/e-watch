@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+/* import { useReducer } from "react";
 import { createContext } from "react";
 
 const initState = {
@@ -19,12 +19,47 @@ const reducer = (state,action) => {
                 throw new Error("action.payload missing in ADD action")
             }
             const {sku,name,price} = action.payload
-            const filteredItem = state.cart.filter(item => item.sku !== sku)
+            const filteredCart = state.cart.filter(item => item.sku !== sku)
             const itemExist = state.cart.find(item => item.sku === sku)
             const qty = itemExist ? itemExist.qty + 1 : 1 ;
 
-            return {...state, cart: [...filteredItem,{sku,name,price,qty}]}
+            return {...state, cart: [...filteredCart,{sku,name,price,qty}]}
         }
+        
+        case REDUCER_ACTION_TYPE.REMOVE:{
+            if(!action.payload){
+                throw new Error("action.payload is missing in REMOVE action")
+            }
+            const {sku} = action.payload;
+            const filteredCart = state.cart.filter(item => item.sku !== sku);
+
+            return {...state,cart: filteredCart}
+        }
+
+        case REDUCER_ACTION_TYPE.QUANTITY:{
+            if(!action.payload){
+                throw new Error("action.payload is missing in QUANTITY action")
+            }
+
+            const {sku,qty} = action.payload;
+
+            const itemExist = state.cart.find(item => item.sku === sku);
+
+            if(!itemExist){
+                throw new Error("Item must exist in order to update quantity")
+            }
+
+            const updatedItem = {...itemExist,qty}
+
+            const filteredCart = state.cart.filter(item => item.sku !== sku);
+
+            return {...state, cart: [...filteredCart,updatedItem]}
+        }
+
+        case REDUCER_ACTION_TYPE.SUBMIT:{
+            return {...state, cart: []}
+        }
+
         default:
             throw new Error("Unidentified action type")
      } 
@@ -55,15 +90,102 @@ export default CartProvider
 
 
 
+ */
+
+import { createContext, useReducer, useState } from "react"
 
 
 
 
 
+const initState = {
+    cart:[]
+}
+
+const initCartContext = {
+    cart:[]
+}
+
+const CartContext = createContext(initCartContext)
+
+const reducerType = {
+    ADD:"ADD",
+    REMOVE:"REMOVE",
+    QUANTITY:"QUANTITY",
+    SUBMIT:"SUBMIT"
+}
+
+const reducer = (state,action) => {
+    switch(action.type){
+        case reducerType.ADD:{
+            if (!action.payload) {
+                throw new Error("action.payload is missing in ADD action")                
+            }
+            const {name,sku,price} = action.payload
+            const itemExist =  state.cart.find(item => item.sku === sku)
+            const filteredCart = state.cart.filter(item => item.sku !==sku)
+            const qty = itemExist ? itemExist.qty +1 : 1
+
+            return {...state,cart: [...filteredCart,{sku,name,price,qty}]}
+
+        }
+
+        case reducerType.REMOVE:{
+            if (!action.payload) {
+                throw new Error("action.payload is missing in REMOVE action")
+            }
+
+
+            const {sku} = action.payload
+            const filteredCart = state.cart.filter(item => item.sku !==sku)
+
+            return {...state,cart: filteredCart}
+        }
+
+        case reducerType.QUANTITY:{
+            if (!action.payload) {
+                throw new Error("action.payload is missing in QUANTITY action")
+            }
+
+            const {sku,qty} = action.payload;
+
+            const itemExist = state.cart.find(item => item.sku === sku)
+
+            if (!itemExist) {
+                throw new Error("Item must exist for updatind quantity")
+            }
+
+            const filteredCart = state.cart.filter(item => item.sku !== sku)
+
+            const updatedItem = {...itemExist,qty}
+
+            return {...state, cart: [...filteredCart,updatedItem]}
+        }
+
+        case reducerType.SUBMIT:{
+            return {...state,cart: []}
+        }
+
+        default:
+            throw new Error("Unidentififed action type")
+    }
+} 
 
 
 
+const CartProvider = ({children}) =>{
+    const [state,dispatch] = useReducer(reducer,initState)
+    
 
+    return(
+        <CartContext.Provider value={{state,dispatch}} >
+           {children}
+        </CartContext.Provider>
+    )
+} 
+
+export default CartProvider
+/*  */
 
 
 
