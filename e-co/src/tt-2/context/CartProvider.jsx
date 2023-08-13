@@ -92,7 +92,7 @@ export default CartProvider
 
  */
 
-import { createContext, useReducer, useState } from "react"
+import { createContext, useMemo, useReducer, } from "react"
 
 
 
@@ -106,7 +106,7 @@ const initCartContext = {
     cart:[]
 }
 
-const CartContext = createContext(initCartContext)
+export const CartContext = createContext(initCartContext)
 
 const reducerType = {
     ADD:"ADD",
@@ -171,14 +171,39 @@ const reducer = (state,action) => {
     }
 } 
 
+const useCartContext = (initState) => {
+    const [state,dispatch] = useReducer(reducer,initState);
+    const reducerAction = useMemo(() => {
+        return reducerType
+    },[]);
 
+    const totalItem = state.cart.reduce((previousValue,cartItem) => {
+        return previousValue + cartItem.qty
+    },0)
+
+    const totalPrice = new Intl.NumberFormat('en-US',{
+        style: "currency",
+        currency: 'USD',
+    }).format(
+        state.cart.reduce((previousPrice,cartItem) => {
+            return previousPrice + cartItem.price * cartItem.qty
+        },0)
+    );
+
+    const cart = state.cart.sort((a,b)=>{
+        const itemA = Number(a.sku.slice(-4));
+        const itemB = Number(b.sku.slice(-4));
+
+        return itemA - itemB
+    })
+
+    return {state,dispatch,cart,totalItem,totalPrice,reducerAction}
+}
 
 const CartProvider = ({children}) =>{
-    const [state,dispatch] = useReducer(reducer,initState)
     
-
     return(
-        <CartContext.Provider value={{state,dispatch}} >
+        <CartContext.Provider value={useCartContext(initState)} >
            {children}
         </CartContext.Provider>
     )

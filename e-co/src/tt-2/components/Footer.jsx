@@ -1,11 +1,12 @@
 
-const Footer = () => {
+const Footer = ({viewCart,totalPrice,totalItem}) => {
   return (
-    <div className="e-footer" >
-        <p>Total Item: </p>
-        <p>Total Price: $ </p>
+    viewCart ? <p>Shopping Cart &copy; 2023</p>:
+    (<div className="e-footer" >
+        <p>Total Item:{totalItem} </p>
+        <p>Total Price: {totalPrice} </p>
         <p>Shopping Cart &copy; 2023</p>
-    </div>
+    </div>)
   )
 }
 

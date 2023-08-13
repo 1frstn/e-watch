@@ -1,17 +1,23 @@
-import { ProductContext } from "./tt-2/context/ProductProvider"
-import useProducts from "./tt-2/hooks/useProducts"
-
+import { useState } from "react"
+import Header from './tt-2/components/Header'
+import Footer from './tt-2/components/Footer'
+import Cart from "./tt-2/components/Cart"
+import ProductList from "./tt-2/components/ProductList"
+import useCart from "./tt-2/hooks/useCart"
 
 function App() {
-  const {products} = useProducts(ProductContext)
+  const [viewCart,setViewCart] = useState(false)
+  
+  const pageContent = viewCart ? <Cart/> : <ProductList/>;
+
+  const {totalItem,totalPrice} = useCart();
+ 
   return (
     
       <>
-        {products.map(item => (
-            <div key={item.sku} > 
-            <h1>{item.name}</h1>
-            </div>
-         ))}
+        <Header viewCart={viewCart} setViewCart={setViewCart} totalItem={totalItem} totalPrice={totalPrice} />
+        {pageContent}
+        <Footer viewCart={viewCart}  totalItem={totalItem} totalPrice={totalPrice} />
       </>
   
   )

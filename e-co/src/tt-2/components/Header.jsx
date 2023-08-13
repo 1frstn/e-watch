@@ -1,13 +1,14 @@
-import {Link} from 'react-router-dom';
 
-const Header = () => {
+const Header = ({viewCart,setViewCart,totalItem,totalPrice}) => {
   return (
     <div className="e-header">
-        <h1><Link to={'/'} >FRSTN Co.</Link></h1>
+        <h1>FRSTN Co.</h1>
         <div className='e-nav' >
-            <p>Total Item: </p>
-            <p>Total Price: $ </p>
-            <button><Link to={'/cart'} >View Cart</Link></button>
+            <p>Total Item:{totalItem} </p>
+            <p>Total Price:{totalPrice} </p>
+            <button onClick={() => setViewCart(!viewCart)} >
+              {viewCart ? <p>View Products List</p> : <p>View Cart</p> }
+            </button>
         </div>
     </div>
   )
